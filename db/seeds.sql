@@ -23,3 +23,6 @@ VALUES
    ("Rachel", "Ford", 2, 5),
    ("Jared", "Harrington", 3, 5),
    ("Evelyn", "Maximo", 4, 5);
+   ("Chris", "Stiner", 4, 5);
+   ("Nuno", "Andrade", 3, 5);
+   ("Robyn", "Warren", 2, 5);
