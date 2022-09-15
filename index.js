@@ -335,7 +335,7 @@ function getUpdatedRole(employee, roleChoices) {
       },
     ])
     .then((res) => {
-      let query = "UPDATE employee SET rold_id = ? WHERE id = ?";
+      let query = "UPDATE employee SET role_id = ? WHERE id = ?";
       db.query(query, [res.role, res.employee], (err, res) => {
         if (err) throw err;
         initialPrompt();
