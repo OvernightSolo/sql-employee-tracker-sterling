@@ -4,19 +4,16 @@ const mysql = require("mysql2");
 require("console.table");
 
 // Connect to the database
-const db = mysql.createConnection(
-  {
-    host: "localhost",
-    port: 3001,
-    user: "root",
-    password: "password",
-    database: "employees_db",
-  },
-  console.log("You are connected to the employees_db database")
-);
+const db = mysql.createConnection({
+  host: "localhost",
+  port: 3306,
+  user: "root",
+  password: "password",
+  database: "employees_db",
+});
 
-db.connect(() => {
-  console.log("MySQL is connected");
+db.connect((err) => {
+  if (err) throw err;
   initialPrompt();
 });
 
@@ -29,7 +26,7 @@ function initialPrompt() {
         message: "What would you like to do?",
         choices: [
           "View all Departments",
-          "View all role",
+          "View all Roles",
           "View all Employees",
           "Add a Department",
           "Add a Role",
@@ -46,7 +43,7 @@ function initialPrompt() {
         case "View all Departments":
           viewAllDepartments();
           break;
-        case "View all role":
+        case "View all Roles":
           viewAllrole();
           break;
         case "View all Employees":
@@ -81,13 +78,13 @@ function initialPrompt() {
 function viewAllDepartments() {
   let query = `SELECT
     department.id,
-    department.name AS Department
+    department.name AS department
   FROM department`;
 
   db.query(query, (err, res) => {
     if (err) throw err;
     console.table(res);
-    firstPrompt();
+    initialPrompt();
   });
 }
 
@@ -106,7 +103,7 @@ function viewAllrole() {
   db.query(query, (err, res) => {
     if (err) throw err;
     console.table(res);
-    firstPrompt();
+    initialPrompt();
   });
 }
 
@@ -117,9 +114,8 @@ function viewAllEmployees() {
     employee.first_name,
     employee.last_name,
     role.title,
-    department.name AS Department,
-    role.salary,
-    CONCAT(manager.first_name ' ', manager.last_name) AS Manager
+    department.name AS department,
+    role.salary
   FROM employee
   LEFT JOIN role
     ON employee.role_id = role.id
@@ -131,7 +127,7 @@ function viewAllEmployees() {
   db.query(query, (err, res) => {
     if (err) throw err;
     console.table(res);
-    firstPrompt();
+    initialPrompt();
   });
 }
 
@@ -149,7 +145,7 @@ function addDepartment() {
       let query = `INSERT INTO department SET ?`;
       db.query(query, { name: res.name }, (err, res) => {
         if (err) throw err;
-        firstPrompt();
+        initialPrompt();
       });
     });
 }
@@ -210,7 +206,7 @@ function addToRole(department) {
         },
         (err, res) => {
           if (err) throw err;
-          firstPrompt();
+          initialPrompt();
         }
       );
     });
@@ -268,7 +264,7 @@ function staffRoles(role) {
         },
         (err, res) => {
           if (err) throw err;
-          firstPrompt();
+          initialPrompt();
         }
       );
     });
@@ -282,15 +278,14 @@ function updateEmployeeRole() {
     employee.last_name,
     role.title,
     department.name,
-    role.salary,
-    CONCAT(manager.first_name, ' ', manager.last_name) AS Manager
+    role.salary
   FROM employee
   JOIN role
     ON employee.role_id = role.id
   JOIN department
     ON department.id = role.department_id
-  JOIN employee manager
-    ON manager.id = employee.manager_id`;
+  JOIN employee
+    ON employee.id = employee.manager_id`;
 
   db.query(query, (err, res) => {
     if (err) throw err;
@@ -305,7 +300,7 @@ function updateEmployeeRole() {
 
 function updateRole(employee) {
   let query = `SELECT
-    role.idm
+    role.id,
     role.title,
     role.salary
   FROM role`;
@@ -342,7 +337,7 @@ function getUpdatedRole(employee, roleChoices) {
       let query = "UPDATE employee SET rold_id = ? WHERE id = ?";
       db.query(query, [res.role, res.employee], (err, res) => {
         if (err) throw err;
-        firstPrompt();
+        initialPrompt();
       });
     });
 }
@@ -380,7 +375,7 @@ function getDeletedEmp(employee) {
       let query = `DELETE FROM employee WHERE ?`;
       db.query(query, { id: res.employee }, (err, res) => {
         if (err) throw err;
-        firstPrompt();
+        initialPrompt();
       });
     });
 }
