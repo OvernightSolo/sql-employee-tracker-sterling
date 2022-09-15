@@ -277,15 +277,16 @@ function updateEmployeeRole() {
     employee.first_name,
     employee.last_name,
     role.title,
-    department.name,
-    role.salary
+    department.name AS department,
+    role.salary,
+    CONCAT(manager.first_name, ' ', manager.last_name) AS manager
   FROM employee
-  JOIN role
+  LEFT JOIN role
     ON employee.role_id = role.id
-  JOIN department
-    ON department.id = role.department_id
-  JOIN employee
-    ON employee.id = employee.manager_id`;
+  LEFT JOIN department
+    ON role.department_id = department.id
+  LEFT JOIN employee manager
+    ON manager.id = employee.manager_id`;
 
   db.query(query, (err, res) => {
     if (err) throw err;

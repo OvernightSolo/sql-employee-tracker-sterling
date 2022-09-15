@@ -13,16 +13,16 @@ VALUES
    ("Dig Content Coordinator", 80000, 3);
 
 -- Manager
-INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES
-   ("Christena", "Garduno", 1, 5);
-
--- Employees
 INSERT INTO employee (first_name, last_name, role_id)
 VALUES
-   ("Rachel", "Ford", 2),
-   ("Jared", "Harrington", 3),
-   ("Evelyn", "Maximo", 4),
-   ("Chris", "Stiner", 4),
-   ("Nuno", "Andrade", 3),
-   ("Robyn", "Warren", 2);
+   ("Christena", "Garduno", 1);
+
+-- Employees
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES
+   ("Rachel", "Ford", 2, 1),
+   ("Jared", "Harrington", 3, 1),
+   ("Evelyn", "Maximo", 4, 1),
+   ("Chris", "Stiner", 4, 1),
+   ("Nuno", "Andrade", 3, 1),
+   ("Robyn", "Warren", 2, 1);
