@@ -44,7 +44,7 @@ function initialPrompt() {
           viewAllDepartments();
           break;
         case "View all Roles":
-          viewAllrole();
+          viewAllroles();
           break;
         case "View all Employees":
           viewAllEmployees();
@@ -89,7 +89,7 @@ function viewAllDepartments() {
 }
 
 // Roles
-function viewAllrole() {
+function viewAllroles() {
   let query = `SELECT
     role.id,
     role.title AS Title,
