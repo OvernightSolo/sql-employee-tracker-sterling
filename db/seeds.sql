@@ -5,7 +5,7 @@ VALUES
    ("Digital"),
    ("Media");
 
-INSERT INTO roles (title, salary, department_id)
+INSERT INTO role (title, salary, department_id)
 VALUES
    ("Manager", 100000, 4),
    ("Accountant", 60000, 1),

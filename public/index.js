@@ -32,7 +32,7 @@ function initialPrompt() {
         message: "What would you like to do?",
         choices: [
           "View all Departments",
-          "View all Roles",
+          "View all role",
           "View all Employees",
           "Add a Department",
           "Add a Role",
@@ -49,8 +49,8 @@ function initialPrompt() {
         case "View all Departments":
           viewAllDepartments();
           break;
-        case "View all Roles":
-          viewAllRoles();
+        case "View all role":
+          viewAllrole();
           break;
         case "View all Employees":
           viewAllEmployees();
@@ -78,4 +78,62 @@ function initialPrompt() {
     .catch((err) => {
       if (err) throw err;
     });
+}
+
+// Departments
+function viewAllDepartments() {
+  let query = `SELECT
+    department.id,
+    department.name AS Department
+  FROM department`;
+
+  db.query(query, (err, res) => {
+    if (err) throw err;
+    console.table(res);
+    firstPrompt();
+  });
+}
+
+// role
+function viewAllrole() {
+  let query = `SELECT
+    role.id,
+    role.title AS Title,
+    role.salary AS Salary,
+    role.department_id
+  FROM role
+  LEFT JOIN department
+    ON role.id = department.name
+  `;
+
+  db.query(query, (err, res) => {
+    if (err) throw err;
+    console.table(res);
+    firstPrompt();
+  });
+}
+
+//Employees
+function viewAllEmployees() {
+  let query = `SELECT
+    employee.id,
+    employee.first_name,
+    employee.last_name,
+    role.title,
+    department.name AS Department,
+    role.salary,
+    CONCAT(manager.first_name ' ', manager.last_name) AS Manager
+  FROM employee
+  LEFT JOIN role
+    ON employee.role_id = role.id
+  LEFT JOIN department
+    ON department.id = role.department_id
+  LEFT JOIN employee manager
+    ON manager.id = employee.manager_id`;
+
+  db.query(query, (err, res) => {
+    if (err) throw err;
+    console.table(res);
+    firstPrompt();
+  });
 }
