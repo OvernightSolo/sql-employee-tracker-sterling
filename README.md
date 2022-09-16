@@ -24,8 +24,9 @@ https://drive.google.com/file/d/1aY0nwSXhEC1q4m21D6QoLRpIyB-fTyO-/view
 
 ## Installation
 
-Run `npm install` for dependencies
-Run `npm init -y` to create a package.json manifest
+Run `npm install` for dependencies.
+
+Run `npm init -y` to create a package.json manifest.
 
 ## Usage
 
